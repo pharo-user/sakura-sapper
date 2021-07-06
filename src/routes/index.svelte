@@ -37,14 +37,9 @@
 </style>
 
 <svelte:head>
-	<title>Sapper project template</title>
+	<title>SAKURA NETWORK Shopify App</title>
 </svelte:head>
 
-<h1>Great success!</h1>
+<h3>SAKURA NETWORK App is installed</h3>
 
-<figure>
-	<img alt="Success Kid" src="{successkid}">
-	<figcaption>Have fun with Sapper!</figcaption>
-</figure>
-
-<p><strong>Try editing this file (src/routes/index.svelte) to test live reloading.</strong></p>
+<a href='.\login'>Access Sakura.eco</a>
