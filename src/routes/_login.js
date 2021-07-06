@@ -16,3 +16,15 @@ export async function doLogin(email, password) {
           return d;
         })
 }
+
+export async function doGetArticles(id) {
+
+  let url = "https://sakura.eco/api/widget/articles/"+id;
+
+  return await fetch( url , {
+      mode: 'cors' })
+    .then((r) => r.json())
+      .then((d) => {
+          return d;
+        })
+}
