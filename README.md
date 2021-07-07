@@ -25,11 +25,15 @@ npm install
 ## run in development mode
 
 npm run dev
-
 open browser on 127.0.0.1:3000/shopify3
 
 
 ## export static files 
 
 npm run export
+
+## how to set shop id
+
+http://127.0.0.1:5000/shopify3/?shop=shop1.sakura.shopify.com
+
 

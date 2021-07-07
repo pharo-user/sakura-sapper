@@ -1,5 +1,5 @@
 <script>
-	import successkid from 'images/successkid.jpg';
+	import { shop } from '../components/stores.js';
 </script>
 
 <style>
@@ -40,6 +40,7 @@
 	<title>SAKURA NETWORK Shopify App</title>
 </svelte:head>
 
-<h3>SAKURA NETWORK App is installed</h3>
+<h2>SAKURA NETWORK App is installed</h2>
+<h3>shop id :  {$shop}</h3>
 
 <a href='.\login'>Access Sakura.eco</a>
