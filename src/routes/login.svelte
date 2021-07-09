@@ -66,9 +66,9 @@
         let r = await doLogin(email, password);
         console.log(r);
         if (r.status == 'success') {
-            goto('/dashboard');
+            goto('dashboard');
         } else {
-            goto('/');
+            goto('.');
         }
 	}
 </script>
