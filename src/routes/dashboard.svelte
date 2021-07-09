@@ -28,7 +28,7 @@
 
 </style>
 <svelte:head>
-	<title>About</title>
+	<title>Dashboard</title>
 </svelte:head>
 <br />
 <br />

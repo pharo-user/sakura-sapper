@@ -2,7 +2,7 @@
   "bundler": "rollup",
   "shimport": "2.0.4",
   "assets": {
-    "main": "client.54660bdd.js"
+    "main": "client.2ab7eb9e.js"
   },
   "css": {
     "main": [
@@ -11,36 +11,36 @@
   },
   "dependencies": {
     "index.svelte": [
-      "index.cb170647.js",
+      "index.c79ff5a2.js",
       "inject_styles.5607aec6.js",
       "index-030c59dc.css"
     ],
     "dashboard.svelte": [
-      "dashboard.f3e4e5e4.js",
+      "dashboard.20ba5cfe.js",
       "inject_styles.5607aec6.js",
       "dashboard-b87096f5.css"
     ],
     "about.svelte": [
-      "about.4e208a2c.js",
+      "about.fb5f7f11.js",
       "inject_styles.5607aec6.js"
     ],
     "_login.js": [
-      "login.21855329.js",
+      "login.2a9b4978.js",
       "inject_styles.5607aec6.js",
       "login-6cc5557a.css"
     ],
     "login.svelte": [
-      "login.21855329.js",
+      "login.2a9b4978.js",
       "inject_styles.5607aec6.js",
       "login-6cc5557a.css"
     ],
     "blog/index.svelte": [
-      "index.75feb0d9.js",
+      "index.c2b79e54.js",
       "inject_styles.5607aec6.js",
       "index-7ed37c94.css"
     ],
     "blog/[slug].svelte": [
-      "[slug].573718d7.js",
+      "[slug].6018e199.js",
       "inject_styles.5607aec6.js",
       "[slug]-5bc8f95f.css"
     ]

@@ -66,17 +66,20 @@
     let r = doGetArticles(123);
     console.log(r);
 	}
-	function login() {
-    console.log('login');
-    let r = doLogin(email, password);
-    console.log(r);
+	async function login() {
+        console.log('login');
+        let r = await doLogin(email, password);
+        console.log(r);
+        if (r.status == 'success') {
+            goto('/dashboard');
+        }
 	}
 </script>
 
 
 
 <svelte:head>
-	<title>About</title>
+	<title>Login</title>
 </svelte:head>
 <br />
 <br />
