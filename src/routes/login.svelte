@@ -54,24 +54,21 @@
 </style>
 
 <script>
+  import {goto} from '@sapper/app';
   import { doLogin } from './_login';
   import { doGetArticles } from './_login';
-  import { onMount } from "svelte";
 
   let email = '';
   let password = '';
 
-	function test() {
-    console.log('test');
-    let r = doGetArticles(123);
-    console.log(r);
-	}
 	async function login() {
         console.log('login');
         let r = await doLogin(email, password);
         console.log(r);
         if (r.status == 'success') {
             goto('/dashboard');
+        } else {
+            goto('/');
         }
 	}
 </script>
@@ -93,9 +90,6 @@
         <button on:click|once={login}>
             Sign In
         </button>
-        <br />
-        <button on:click|once={test}>
-            Test
-        </button>
+
     </div>
 </div>
