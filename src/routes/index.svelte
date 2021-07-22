@@ -9,39 +9,8 @@
         padding: 10%;
     }
 
-    div div {
-        background-color: #F6F4F4;
-        padding: 0 0;
-        margin: 0 0;
-    }
-
-    /*:global(body){
-                background: #F6F4F4;
-    }*/
-
-	figure, p {
-		text-align: center;
-		margin: 0 auto;
-	}
-
-	h1 {
-		color: black;
-		font-family: 'Montserrat';
-		font-weight: 'bold';
-        font-size: 2em;
-	}
-
-	figure {
-		margin: 0 0 1em 0;
-	}
-
-	img {
-		width: 100%;
-		max-width: 400px;
-		margin: 0 0 1em 0;
-	}
-
 	p {
+		text-align: center;
 		margin: 1em auto;
 	}
 
@@ -50,11 +19,6 @@
 
 	}
 
-	@media (min-width: 480px) {
-		h1 {
-			font-size: 4em;
-		}
-	}
 </style>
 
 <svelte:head>
@@ -63,7 +27,12 @@
 <br />
 <br />
 <div>
-<h2>SAKURA NETWORK App is installed</h2>
-<h3>shop id :  {$shop}</h3>
-<a href='.\login'>Access Sakura.eco</a>
+	<h2>SAKURA NETWORK App is installed</h2>
+	<h3>{$shop}</h3>
+	<br />
+	<br />
+	<p>In order to see current statistics please click
+	<a href='.\login'> here </a>
+	and enter your credentials</p>
+	
 </div>
