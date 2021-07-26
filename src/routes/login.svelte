@@ -54,12 +54,15 @@
 </style>
 
 <script>
+  import Icon from 'svelte-awesome/components/Icon.svelte'
+  import { eye } from 'svelte-awesome/icons';
   import {goto} from '@sapper/app';
   import { doLogin } from './_login';
   import { doGetArticles } from './_login';
 
   let email = '';
   let password = '';
+  let pw_visible = false;
 
 	async function login() {
         console.log('login');
@@ -71,6 +74,11 @@
             goto('.');
         }
 	}
+
+    function toggle() {
+        pw_visible = !pw_visible;
+        document.querySelector('#password').type = pw_visible ? 'text' : 'password';
+    } 
 </script>
 
 
@@ -83,13 +91,16 @@
 <h1>CONNECT TO SAKURA.ECO</h1>
 <div>
     <div>
-        <input bind:value={email} placeholder="Email">
+        <input type="email" id="email" bind:value={email} placeholder="Email">
         <br />
-        <input bind:value={password} placeholder="Password">
+        <div>
+        <input type="password" id="password" bind:value={password} placeholder="Password">
+        <button on:click={toggle}><Icon data={eye} /></button>
+        </div>
         <br />
         <button on:click|once={login}>
             Sign In
         </button>
-
+        
     </div>
 </div>
