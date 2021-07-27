@@ -24,149 +24,6 @@ var Url__default = /*#__PURE__*/_interopDefaultLegacy(Url);
 var https__default = /*#__PURE__*/_interopDefaultLegacy(https);
 var zlib__default = /*#__PURE__*/_interopDefaultLegacy(zlib);
 
-// Ordinarily, you'd generate this data from markdown files in your
-// repo, or fetch them from a database of some kind. But in order to
-// avoid unnecessary dependencies in the starter template, and in the
-// service of obviousness, we're just going to leave it here.
-
-// This file is called `_posts.js` rather than `posts.js`, because
-// we don't want to create an `/blog/posts` route — the leading
-// underscore tells Sapper not to do that.
-
-const posts = [
-	{
-		title: 'What is Sapper?',
-		slug: 'what-is-sapper',
-		html: `
-			<p>First, you have to know what <a href='https://svelte.dev'>Svelte</a> is. Svelte is a UI framework with a bold new idea: rather than providing a library that you write code with (like React or Vue, for example), it's a compiler that turns your components into highly optimized vanilla JavaScript. If you haven't already read the <a href='https://svelte.dev/blog/frameworks-without-the-framework'>introductory blog post</a>, you should!</p>
-
-			<p>Sapper is a Next.js-style framework (<a href='blog/how-is-sapper-different-from-next'>more on that here</a>) built around Svelte. It makes it embarrassingly easy to create extremely high performance web apps. Out of the box, you get:</p>
-
-			<ul>
-				<li>Code-splitting, dynamic imports and hot module replacement, powered by webpack</li>
-				<li>Server-side rendering (SSR) with client-side hydration</li>
-				<li>Service worker for offline support, and all the PWA bells and whistles</li>
-				<li>The nicest development experience you've ever had, or your money back</li>
-			</ul>
-
-			<p>It's implemented as Express middleware. Everything is set up and waiting for you to get started, but you keep complete control over the server, service worker, webpack config and everything else, so it's as flexible as you need it to be.</p>
-		`
-	},
-
-	{
-		title: 'How to use Sapper',
-		slug: 'how-to-use-sapper',
-		html: `
-			<h2>Step one</h2>
-			<p>Create a new project, using <a href='https://github.com/Rich-Harris/degit'>degit</a>:</p>
-
-			<pre><code>npx degit "sveltejs/sapper-template#rollup" my-app
-			cd my-app
-			npm install # or yarn!
-			npm run dev
-			</code></pre>
-
-			<h2>Step two</h2>
-			<p>Go to <a href='http://localhost:3000'>localhost:3000</a>. Open <code>my-app</code> in your editor. Edit the files in the <code>src/routes</code> directory or add new ones.</p>
-
-			<h2>Step three</h2>
-			<p>...</p>
-
-			<h2>Step four</h2>
-			<p>Resist overdone joke formats.</p>
-		`
-	},
-
-	{
-		title: 'Why the name?',
-		slug: 'why-the-name',
-		html: `
-			<p>In war, the soldiers who build bridges, repair roads, clear minefields and conduct demolitions — all under combat conditions — are known as <em>sappers</em>.</p>
-
-			<p>For web developers, the stakes are generally lower than those for combat engineers. But we face our own hostile environment: underpowered devices, poor network connections, and the complexity inherent in front-end engineering. Sapper, which is short for <strong>S</strong>velte <strong>app</strong> mak<strong>er</strong>, is your courageous and dutiful ally.</p>
-		`
-	},
-
-	{
-		title: 'How is Sapper different from Next.js?',
-		slug: 'how-is-sapper-different-from-next',
-		html: `
-			<p><a href='https://github.com/zeit/next.js'>Next.js</a> is a React framework from <a href='https://vercel.com/'>Vercel</a>, and is the inspiration for Sapper. There are a few notable differences, however:</p>
-
-			<ul>
-				<li>It's powered by <a href='https://svelte.dev'>Svelte</a> instead of React, so it's faster and your apps are smaller</li>
-				<li>Instead of route masking, we encode route parameters in filenames. For example, the page you're looking at right now is <code>src/routes/blog/[slug].svelte</code></li>
-				<li>As well as pages (Svelte components, which render on server or client), you can create <em>server routes</em> in your <code>routes</code> directory. These are just <code>.js</code> files that export functions corresponding to HTTP methods, and receive Express <code>request</code> and <code>response</code> objects as arguments. This makes it very easy to, for example, add a JSON API such as the one <a href='blog/how-is-sapper-different-from-next.json'>powering this very page</a></li>
-				<li>Links are just <code>&lt;a&gt;</code> elements, rather than framework-specific <code>&lt;Link&gt;</code> components. That means, for example, that <a href='blog/how-can-i-get-involved'>this link right here</a>, despite being inside a blob of HTML, works with the router as you'd expect.</li>
-			</ul>
-		`
-	},
-
-	{
-		title: 'How can I get involved?',
-		slug: 'how-can-i-get-involved',
-		html: `
-			<p>We're so glad you asked! Come on over to the <a href='https://github.com/sveltejs/svelte'>Svelte</a> and <a href='https://github.com/sveltejs/sapper'>Sapper</a> repos, and join us in the <a href='https://svelte.dev/chat'>Discord chatroom</a>. Everyone is welcome, especially you!</p>
-		`
-	}
-];
-
-posts.forEach(post => {
-	post.html = post.html.replace(/^\t{3}/gm, '');
-});
-
-const contents = JSON.stringify(posts.map(post => {
-	return {
-		title: post.title,
-		slug: post.slug
-	};
-}));
-
-function get$1(req, res) {
-	res.writeHead(200, {
-		'Content-Type': 'application/json'
-	});
-
-	res.end(contents);
-}
-
-var route_0 = /*#__PURE__*/Object.freeze({
-	__proto__: null,
-	get: get$1
-});
-
-const lookup = new Map();
-posts.forEach(post => {
-	lookup.set(post.slug, JSON.stringify(post));
-});
-
-function get(req, res, next) {
-	// the `slug` parameter is available because
-	// this file is called [slug].json.js
-	const { slug } = req.params;
-
-	if (lookup.has(slug)) {
-		res.writeHead(200, {
-			'Content-Type': 'application/json'
-		});
-
-		res.end(lookup.get(slug));
-	} else {
-		res.writeHead(404, {
-			'Content-Type': 'application/json'
-		});
-
-		res.end(JSON.stringify({
-			message: `Not found`
-		}));
-	}
-}
-
-var route_1 = /*#__PURE__*/Object.freeze({
-	__proto__: null,
-	get: get
-});
-
 function noop$1() { }
 function run(fn) {
     return fn();
@@ -204,6 +61,65 @@ function setContext(key, context) {
     get_current_component().$$.context.set(key, context);
 }
 Promise.resolve();
+
+// source: https://html.spec.whatwg.org/multipage/indices.html
+const boolean_attributes = new Set([
+    'allowfullscreen',
+    'allowpaymentrequest',
+    'async',
+    'autofocus',
+    'autoplay',
+    'checked',
+    'controls',
+    'default',
+    'defer',
+    'disabled',
+    'formnovalidate',
+    'hidden',
+    'ismap',
+    'loop',
+    'multiple',
+    'muted',
+    'nomodule',
+    'novalidate',
+    'open',
+    'playsinline',
+    'readonly',
+    'required',
+    'reversed',
+    'selected'
+]);
+
+const invalid_attribute_name_character = /[\s'">/=\u{FDD0}-\u{FDEF}\u{FFFE}\u{FFFF}\u{1FFFE}\u{1FFFF}\u{2FFFE}\u{2FFFF}\u{3FFFE}\u{3FFFF}\u{4FFFE}\u{4FFFF}\u{5FFFE}\u{5FFFF}\u{6FFFE}\u{6FFFF}\u{7FFFE}\u{7FFFF}\u{8FFFE}\u{8FFFF}\u{9FFFE}\u{9FFFF}\u{AFFFE}\u{AFFFF}\u{BFFFE}\u{BFFFF}\u{CFFFE}\u{CFFFF}\u{DFFFE}\u{DFFFF}\u{EFFFE}\u{EFFFF}\u{FFFFE}\u{FFFFF}\u{10FFFE}\u{10FFFF}]/u;
+// https://html.spec.whatwg.org/multipage/syntax.html#attributes-2
+// https://infra.spec.whatwg.org/#noncharacter
+function spread(args, classes_to_add) {
+    const attributes = Object.assign({}, ...args);
+    if (classes_to_add) {
+        if (attributes.class == null) {
+            attributes.class = classes_to_add;
+        }
+        else {
+            attributes.class += ' ' + classes_to_add;
+        }
+    }
+    let str = '';
+    Object.keys(attributes).forEach(name => {
+        if (invalid_attribute_name_character.test(name))
+            return;
+        const value = attributes[name];
+        if (value === true)
+            str += ' ' + name;
+        else if (boolean_attributes.has(name.toLowerCase())) {
+            if (value)
+                str += ' ' + name;
+        }
+        else if (value != null) {
+            str += ` ${name}="${value}"`;
+        }
+    });
+    return str;
+}
 const escaped$1 = {
     '"': '&quot;',
     "'": '&#39;',
@@ -213,6 +129,16 @@ const escaped$1 = {
 };
 function escape(html) {
     return String(html).replace(/["'&<>]/g, match => escaped$1[match]);
+}
+function escape_attribute_value(value) {
+    return typeof value === 'string' ? escape(value) : value;
+}
+function escape_object(obj) {
+    const result = {};
+    for (const key in obj) {
+        result[key] = escape_attribute_value(obj[key]);
+    }
+    return result;
 }
 function each(items, fn) {
     let str = '';
@@ -339,210 +265,424 @@ const shop = createShop();
 
 /* src/routes/index.svelte generated by Svelte v3.38.3 */
 
-const css$5 = {
-	code: "@media(min-width: 480px){}",
-	map: "{\"version\":3,\"file\":\"index.svelte\",\"sources\":[\"index.svelte\"],\"sourcesContent\":[\"<script>\\n\\timport { shop } from '../components/stores.js';\\n</script>\\n\\n<style>\\n\\th1, figure, p {\\n\\t\\ttext-align: center;\\n\\t\\tmargin: 0 auto;\\n\\t}\\n\\n\\th1 {\\n\\t\\tfont-size: 2.8em;\\n\\t\\ttext-transform: uppercase;\\n\\t\\tfont-weight: 700;\\n\\t\\tmargin: 0 0 0.5em 0;\\n\\t}\\n\\n\\tfigure {\\n\\t\\tmargin: 0 0 1em 0;\\n\\t}\\n\\n\\timg {\\n\\t\\twidth: 100%;\\n\\t\\tmax-width: 400px;\\n\\t\\tmargin: 0 0 1em 0;\\n\\t}\\n\\n\\tp {\\n\\t\\tmargin: 1em auto;\\n\\t}\\n\\n\\t@media (min-width: 480px) {\\n\\t\\th1 {\\n\\t\\t\\tfont-size: 4em;\\n\\t\\t}\\n\\t}\\n</style>\\n\\n<svelte:head>\\n\\t<title>SAKURA NETWORK Shopify App</title>\\n</svelte:head>\\n\\n<h2>SAKURA NETWORK App is installed</h2>\\n<h3>shop id :  {$shop}</h3>\\n\\n<a href='.\\\\login'>Access Sakura.eco</a>\\n\"],\"names\":[],\"mappings\":\"AA+BC,MAAM,AAAC,YAAY,KAAK,CAAC,AAAC,CAAC,AAI3B,CAAC\"}"
+const css$6 = {
+	code: "div.svelte-706fi2{background-color:#F6F4F4;padding:10%}p.svelte-706fi2{text-align:center;margin:1em auto}a.svelte-706fi2{color:#5D2828}",
+	map: "{\"version\":3,\"file\":\"index.svelte\",\"sources\":[\"index.svelte\"],\"sourcesContent\":[\"<script>\\n\\timport { shop } from '../components/stores.js';\\n</script>\\n\\n<style>\\n\\n    div {\\n        background-color: #F6F4F4;\\n        padding: 10%;\\n    }\\n\\n\\tp {\\n\\t\\ttext-align: center;\\n\\t\\tmargin: 1em auto;\\n\\t}\\n\\n\\ta {\\n\\t    color: #5D2828;\\n\\n\\t}\\n\\n</style>\\n\\n<svelte:head>\\n\\t<title>SAKURA NETWORK Shopify App</title>\\n</svelte:head>\\n<br />\\n<br />\\n<div>\\n\\t<h2>SAKURA NETWORK App is installed</h2>\\n\\t<h3>{$shop}</h3>\\n\\t<br />\\n\\t<br />\\n\\t<p>In order to see current statistics please click\\n\\t<a href='.\\\\login'> here </a>\\n\\tand enter your credentials</p>\\n\\t\\n</div>\\n\"],\"names\":[],\"mappings\":\"AAMI,GAAG,cAAC,CAAC,AACD,gBAAgB,CAAE,OAAO,CACzB,OAAO,CAAE,GAAG,AAChB,CAAC,AAEJ,CAAC,cAAC,CAAC,AACF,UAAU,CAAE,MAAM,CAClB,MAAM,CAAE,GAAG,CAAC,IAAI,AACjB,CAAC,AAED,CAAC,cAAC,CAAC,AACC,KAAK,CAAE,OAAO,AAElB,CAAC\"}"
 };
 
 const Routes = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 	let $shop, $$unsubscribe_shop;
 	$$unsubscribe_shop = subscribe(shop, value => $shop = value);
-	$$result.css.add(css$5);
+	$$result.css.add(css$6);
 	$$unsubscribe_shop();
 
 	return `${($$result.head += `${($$result.title = `<title>SAKURA NETWORK Shopify App</title>`, "")}`, "")}
-
-<h2>SAKURA NETWORK App is installed</h2>
-<h3>shop id :  ${escape($shop)}</h3>
-
-<a href="${".\\login"}">Access Sakura.eco</a>`;
+<br>
+<br>
+<div class="${"svelte-706fi2"}"><h2>SAKURA NETWORK App is installed</h2>
+	<h3>${escape($shop)}</h3>
+	<br>
+	<br>
+	<p class="${"svelte-706fi2"}">In order to see current statistics please click
+	<a href="${".\\login"}" class="${"svelte-706fi2"}">here </a>
+	and enter your credentials</p></div>`;
 });
 
 var component_0 = /*#__PURE__*/Object.freeze({
-	__proto__: null,
-	'default': Routes
+    __proto__: null,
+    'default': Routes
 });
 
 /* src/components/Statistics.svelte generated by Svelte v3.38.3 */
 
+const css$5 = {
+	code: "table.svelte-1lxwc74{text-align:left}th.svelte-1lxwc74{font-weight:lighter}td.svelte-1lxwc74{padding:3% 70%;font-weight:lighter}",
+	map: "{\"version\":3,\"file\":\"Statistics.svelte\",\"sources\":[\"Statistics.svelte\"],\"sourcesContent\":[\"<style>\\n    table {\\n        text-align: left;\\n    }\\n\\n    th {\\n        font-weight: lighter;\\n    }\\n\\n    td {\\n        padding: 3% 70%;\\n        font-weight: lighter;\\n    }\\n\\n</style>\\n<table>\\n    <tr>\\n    <th>VIEWS</th>\\n    <td>0</td>\\n    </tr>\\n    <tr>\\n    <th>CLICKS</th>\\n    <td>0</td>\\n    </tr>\\n    <tr>\\n    <th>REVENUES</th>\\n    <td>0</td>\\n    </tr>\\n    <tr>\\n    <th>ORDERS</th>\\n    <td>0</td>\\n    </tr>\\n</table>\\n\"],\"names\":[],\"mappings\":\"AACI,KAAK,eAAC,CAAC,AACH,UAAU,CAAE,IAAI,AACpB,CAAC,AAED,EAAE,eAAC,CAAC,AACA,WAAW,CAAE,OAAO,AACxB,CAAC,AAED,EAAE,eAAC,CAAC,AACA,OAAO,CAAE,EAAE,CAAC,GAAG,CACf,WAAW,CAAE,OAAO,AACxB,CAAC\"}"
+};
+
 const Statistics = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-	return `<h2>STATISTICS</h2>
-<table><tr><th>VIEWS</th>
-<td>385</td></tr>
-<tr><th>CLICKS</th>
-<td>11</td></tr>
-<tr><th>REVENUES</th>
-<td>0</td></tr>
-<tr><th>ORDERS</th>
-<td>0</td></tr></table>`;
+	$$result.css.add(css$5);
+
+	return `<table class="${"svelte-1lxwc74"}"><tr><th class="${"svelte-1lxwc74"}">VIEWS</th>
+    <td class="${"svelte-1lxwc74"}">0</td></tr>
+    <tr><th class="${"svelte-1lxwc74"}">CLICKS</th>
+    <td class="${"svelte-1lxwc74"}">0</td></tr>
+    <tr><th class="${"svelte-1lxwc74"}">REVENUES</th>
+    <td class="${"svelte-1lxwc74"}">0</td></tr>
+    <tr><th class="${"svelte-1lxwc74"}">ORDERS</th>
+    <td class="${"svelte-1lxwc74"}">0</td></tr></table>`;
 });
 
 /* src/routes/dashboard.svelte generated by Svelte v3.38.3 */
 
+const css$4 = {
+	code: "a.svelte-tzw6d9{color:#5D2828}div.svelte-tzw6d9{background-color:#F6F4F4;padding:7%}h1.svelte-tzw6d9{color:black;font-family:'Montserrat';font-weight:'bold';font-size:2em}",
+	map: "{\"version\":3,\"file\":\"dashboard.svelte\",\"sources\":[\"dashboard.svelte\"],\"sourcesContent\":[\"<script>\\n\\timport Statistics from '../components/Statistics.svelte';\\n\\timport { shop } from '../components/stores.js';\\n\\n    let shop_url = 'https://'+$shop;\\n</script>\\n\\n<style>\\n\\n    a {\\n\\t    color: #5D2828;\\n\\n\\t}\\n\\n    div {\\n        background-color: #F6F4F4;\\n        padding: 7%;\\n    }\\n\\n\\th1 {\\n\\t\\tcolor: black;\\n\\t\\tfont-family: 'Montserrat';\\n\\t\\tfont-weight: 'bold';\\n\\t\\tfont-size: 2em;\\n\\t}\\n\\n</style>\\n<svelte:head>\\n\\t<title>Dashboard</title>\\n</svelte:head>\\n<br />\\n<br />\\n<h1>SAKURA NETWORK</h1>\\n<div>\\n    <h2>STATISTICS</h2>\\n    <Statistics></Statistics>\\n\\n    <p>click <a href={shop_url}> here</a> to go back to the shop</p>\\n</div>\\n\\n\"],\"names\":[],\"mappings\":\"AASI,CAAC,cAAC,CAAC,AACF,KAAK,CAAE,OAAO,AAElB,CAAC,AAEE,GAAG,cAAC,CAAC,AACD,gBAAgB,CAAE,OAAO,CACzB,OAAO,CAAE,EAAE,AACf,CAAC,AAEJ,EAAE,cAAC,CAAC,AACH,KAAK,CAAE,KAAK,CACZ,WAAW,CAAE,YAAY,CACzB,WAAW,CAAE,MAAM,CACnB,SAAS,CAAE,GAAG,AACf,CAAC\"}"
+};
+
 const Dashboard = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-	return `${($$result.head += `${($$result.title = `<title>About</title>`, "")}`, "")}
+	let $shop, $$unsubscribe_shop;
+	$$unsubscribe_shop = subscribe(shop, value => $shop = value);
+	let shop_url = "https://" + $shop;
+	$$result.css.add(css$4);
+	$$unsubscribe_shop();
 
-<h1>SAKURA NETWORK</h1>
+	return `${($$result.head += `${($$result.title = `<title>Dashboard</title>`, "")}`, "")}
+<br>
+<br>
+<h1 class="${"svelte-tzw6d9"}">SAKURA NETWORK</h1>
+<div class="${"svelte-tzw6d9"}"><h2>STATISTICS</h2>
+    ${validate_component(Statistics, "Statistics").$$render($$result, {}, {}, {})}
 
-${validate_component(Statistics, "Statistics").$$render($$result, {}, {}, {})}`;
+    <p>click <a${add_attribute("href", shop_url, 0)} class="${"svelte-tzw6d9"}">here</a> to go back to the shop</p></div>`;
 });
 
 var component_1 = /*#__PURE__*/Object.freeze({
-	__proto__: null,
-	'default': Dashboard
+    __proto__: null,
+    'default': Dashboard
 });
 
-/* src/routes/about.svelte generated by Svelte v3.38.3 */
+/* node_modules/svelte-awesome/components/svg/Path.svelte generated by Svelte v3.38.3 */
 
-const About = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-	return `${($$result.head += `${($$result.title = `<title>About</title>`, "")}`, "")}
-
-<h1>About this site</h1>
-
-<p>This is the &#39;about&#39; page. There&#39;s not much here.</p>`;
+const Path = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+	let { id = "" } = $$props;
+	let { data = {} } = $$props;
+	if ($$props.id === void 0 && $$bindings.id && id !== void 0) $$bindings.id(id);
+	if ($$props.data === void 0 && $$bindings.data && data !== void 0) $$bindings.data(data);
+	return `<path${spread([{ key: "path-" + escape(id) }, escape_object(data)])}></path>`;
 });
 
-var component_2 = /*#__PURE__*/Object.freeze({
-	__proto__: null,
-	'default': About
+/* node_modules/svelte-awesome/components/svg/Polygon.svelte generated by Svelte v3.38.3 */
+
+const Polygon = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+	let { id = "" } = $$props;
+	let { data = {} } = $$props;
+	if ($$props.id === void 0 && $$bindings.id && id !== void 0) $$bindings.id(id);
+	if ($$props.data === void 0 && $$bindings.data && data !== void 0) $$bindings.data(data);
+	return `<polygon${spread([{ key: "polygon-" + escape(id) }, escape_object(data)])}></polygon>`;
 });
 
-/* src/routes/login.svelte generated by Svelte v3.38.3 */
+/* node_modules/svelte-awesome/components/svg/Raw.svelte generated by Svelte v3.38.3 */
 
-const Login = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-	let email = "";
-	let password = "";
+const Raw = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+	let cursor = 870711;
 
-	return `${($$result.head += `${($$result.title = `<title>About</title>`, "")}`, "")}
+	function getId() {
+		cursor += 1;
+		return `fa-${cursor.toString(16)}`;
+	}
 
-<h1>CONNECT TO SAKURA.ECO</h1>
-<input placeholder="${"enter your email"}"${add_attribute("value", email, 1)}>
-<input placeholder="${"enter your password"}"${add_attribute("value", password, 1)}>
+	let raw;
+	let { data } = $$props;
 
-<button>Sign In
-</button>
-<button>Test
-</button>`;
+	function getRaw(data) {
+		if (!data || !data.raw) {
+			return null;
+		}
+
+		let rawData = data.raw;
+		const ids = {};
+
+		rawData = rawData.replace(/\s(?:xml:)?id=["']?([^"')\s]+)/g, (match, id) => {
+			const uniqueId = getId();
+			ids[id] = uniqueId;
+			return ` id="${uniqueId}"`;
+		});
+
+		rawData = rawData.replace(/#(?:([^'")\s]+)|xpointer\(id\((['"]?)([^')]+)\2\)\))/g, (match, rawId, _, pointerId) => {
+			const id = rawId || pointerId;
+
+			if (!id || !ids[id]) {
+				return match;
+			}
+
+			return `#${ids[id]}`;
+		});
+
+		return rawData;
+	}
+
+	if ($$props.data === void 0 && $$bindings.data && data !== void 0) $$bindings.data(data);
+	raw = getRaw(data);
+	return `<g><!-- HTML_TAG_START -->${raw}<!-- HTML_TAG_END --></g>`;
 });
 
-var component_3 = /*#__PURE__*/Object.freeze({
-	__proto__: null,
-	'default': Login
-});
-
-/* src/routes/blog/index.svelte generated by Svelte v3.38.3 */
-
-const css$4 = {
-	code: "ul.svelte-1frg2tf{margin:0 0 1em 0;line-height:1.5}",
-	map: "{\"version\":3,\"file\":\"index.svelte\",\"sources\":[\"index.svelte\"],\"sourcesContent\":[\"<script context=\\\"module\\\">\\n\\texport function preload() {\\n\\t\\treturn this.fetch(`blog.json`).then(r => r.json()).then(posts => {\\n\\t\\t\\treturn { posts };\\n\\t\\t});\\n\\t}\\n</script>\\n\\n<script>\\n\\texport let posts;\\n</script>\\n\\n<style>\\n\\tul {\\n\\t\\tmargin: 0 0 1em 0;\\n\\t\\tline-height: 1.5;\\n\\t}\\n</style>\\n\\n<svelte:head>\\n\\t<title>Blog</title>\\n</svelte:head>\\n\\n<h1>Recent posts</h1>\\n\\n<ul>\\n\\t{#each posts as post}\\n\\t\\t<!-- we're using the non-standard `rel=prefetch` attribute to\\n\\t\\t\\t\\ttell Sapper to load the data for the page as soon as\\n\\t\\t\\t\\tthe user hovers over the link or taps it, instead of\\n\\t\\t\\t\\twaiting for the 'click' event -->\\n\\t\\t<li><a rel=\\\"prefetch\\\" href=\\\"blog/{post.slug}\\\">{post.title}</a></li>\\n\\t{/each}\\n</ul>\\n\"],\"names\":[],\"mappings\":\"AAaC,EAAE,eAAC,CAAC,AACH,MAAM,CAAE,CAAC,CAAC,CAAC,CAAC,GAAG,CAAC,CAAC,CACjB,WAAW,CAAE,GAAG,AACjB,CAAC\"}"
-};
-
-function preload$1() {
-	return this.fetch(`blog.json`).then(r => r.json()).then(posts => {
-		return { posts };
-	});
-}
-
-const Blog = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-	let { posts } = $$props;
-	if ($$props.posts === void 0 && $$bindings.posts && posts !== void 0) $$bindings.posts(posts);
-	$$result.css.add(css$4);
-
-	return `${($$result.head += `${($$result.title = `<title>Blog</title>`, "")}`, "")}
-
-<h1>Recent posts</h1>
-
-<ul class="${"svelte-1frg2tf"}">${each(posts, post => `
-		<li><a rel="${"prefetch"}" href="${"blog/" + escape(post.slug)}">${escape(post.title)}</a></li>`)}</ul>`;
-});
-
-var component_4 = /*#__PURE__*/Object.freeze({
-	__proto__: null,
-	'default': Blog,
-	preload: preload$1
-});
-
-/* src/routes/blog/[slug].svelte generated by Svelte v3.38.3 */
+/* node_modules/svelte-awesome/components/svg/Svg.svelte generated by Svelte v3.38.3 */
 
 const css$3 = {
-	code: ".content.svelte-emm3f3 h2{font-size:1.4em;font-weight:500}.content.svelte-emm3f3 pre{background-color:#f9f9f9;box-shadow:inset 1px 1px 5px rgba(0, 0, 0, 0.05);padding:0.5em;border-radius:2px;overflow-x:auto}.content.svelte-emm3f3 pre code{background-color:transparent;padding:0}.content.svelte-emm3f3 ul{line-height:1.5}.content.svelte-emm3f3 li{margin:0 0 0.5em 0}",
-	map: "{\"version\":3,\"file\":\"[slug].svelte\",\"sources\":[\"[slug].svelte\"],\"sourcesContent\":[\"<script context=\\\"module\\\">\\n\\texport async function preload({ params }) {\\n\\t\\t// the `slug` parameter is available because\\n\\t\\t// this file is called [slug].svelte\\n\\t\\tconst res = await this.fetch(`blog/${params.slug}.json`);\\n\\t\\tconst data = await res.json();\\n\\n\\t\\tif (res.status === 200) {\\n\\t\\t\\treturn { post: data };\\n\\t\\t} else {\\n\\t\\t\\tthis.error(res.status, data.message);\\n\\t\\t}\\n\\t}\\n</script>\\n\\n<script>\\n\\texport let post;\\n</script>\\n\\n<style>\\n\\t/*\\n\\t\\tBy default, CSS is locally scoped to the component,\\n\\t\\tand any unused styles are dead-code-eliminated.\\n\\t\\tIn this page, Svelte can't know which elements are\\n\\t\\tgoing to appear inside the {{{post.html}}} block,\\n\\t\\tso we have to use the :global(...) modifier to target\\n\\t\\tall elements inside .content\\n\\t*/\\n\\t.content :global(h2) {\\n\\t\\tfont-size: 1.4em;\\n\\t\\tfont-weight: 500;\\n\\t}\\n\\n\\t.content :global(pre) {\\n\\t\\tbackground-color: #f9f9f9;\\n\\t\\tbox-shadow: inset 1px 1px 5px rgba(0, 0, 0, 0.05);\\n\\t\\tpadding: 0.5em;\\n\\t\\tborder-radius: 2px;\\n\\t\\toverflow-x: auto;\\n\\t}\\n\\n\\t.content :global(pre) :global(code) {\\n\\t\\tbackground-color: transparent;\\n\\t\\tpadding: 0;\\n\\t}\\n\\n\\t.content :global(ul) {\\n\\t\\tline-height: 1.5;\\n\\t}\\n\\n\\t.content :global(li) {\\n\\t\\tmargin: 0 0 0.5em 0;\\n\\t}\\n</style>\\n\\n<svelte:head>\\n\\t<title>{post.title}</title>\\n</svelte:head>\\n\\n<h1>{post.title}</h1>\\n\\n<div class=\\\"content\\\">\\n\\t{@html post.html}\\n</div>\\n\"],\"names\":[],\"mappings\":\"AA4BC,sBAAQ,CAAC,AAAQ,EAAE,AAAE,CAAC,AACrB,SAAS,CAAE,KAAK,CAChB,WAAW,CAAE,GAAG,AACjB,CAAC,AAED,sBAAQ,CAAC,AAAQ,GAAG,AAAE,CAAC,AACtB,gBAAgB,CAAE,OAAO,CACzB,UAAU,CAAE,KAAK,CAAC,GAAG,CAAC,GAAG,CAAC,GAAG,CAAC,KAAK,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,IAAI,CAAC,CACjD,OAAO,CAAE,KAAK,CACd,aAAa,CAAE,GAAG,CAClB,UAAU,CAAE,IAAI,AACjB,CAAC,AAED,sBAAQ,CAAC,AAAQ,GAAG,AAAC,CAAC,AAAQ,IAAI,AAAE,CAAC,AACpC,gBAAgB,CAAE,WAAW,CAC7B,OAAO,CAAE,CAAC,AACX,CAAC,AAED,sBAAQ,CAAC,AAAQ,EAAE,AAAE,CAAC,AACrB,WAAW,CAAE,GAAG,AACjB,CAAC,AAED,sBAAQ,CAAC,AAAQ,EAAE,AAAE,CAAC,AACrB,MAAM,CAAE,CAAC,CAAC,CAAC,CAAC,KAAK,CAAC,CAAC,AACpB,CAAC\"}"
+	code: ".fa-icon.svelte-1dof0an{display:inline-block;fill:currentColor}.fa-flip-horizontal.svelte-1dof0an{transform:scale(-1, 1)}.fa-flip-vertical.svelte-1dof0an{transform:scale(1, -1)}.fa-spin.svelte-1dof0an{animation:svelte-1dof0an-fa-spin 1s 0s infinite linear}.fa-inverse.svelte-1dof0an{color:#fff}.fa-pulse.svelte-1dof0an{animation:svelte-1dof0an-fa-spin 1s infinite steps(8)}@keyframes svelte-1dof0an-fa-spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}",
+	map: "{\"version\":3,\"file\":\"Svg.svelte\",\"sources\":[\"Svg.svelte\"],\"sourcesContent\":[\"<svg version=\\\"1.1\\\" class=\\\"fa-icon {className}\\\"\\n  class:fa-spin={spin} class:fa-pulse={pulse} class:fa-inverse={inverse}\\n  class:fa-flip-horizontal=\\\"{flip === 'horizontal'}\\\" class:fa-flip-vertical=\\\"{flip === 'vertical'}\\\"\\n  {x} {y} {width} {height}\\n  aria-label={label}\\n  role=\\\"{ label ? 'img' : 'presentation' }\\\"\\n  viewBox={box} {style}\\n  >\\n  <slot></slot>\\n</svg>\\n\\n<style>\\n.fa-icon {\\n  display: inline-block;\\n  fill: currentColor;\\n}\\n.fa-flip-horizontal {\\n  transform: scale(-1, 1);\\n}\\n.fa-flip-vertical {\\n  transform: scale(1, -1);\\n}\\n.fa-spin {\\n  animation: fa-spin 1s 0s infinite linear;\\n}\\n.fa-inverse {\\n  color: #fff;\\n}\\n.fa-pulse {\\n  animation: fa-spin 1s infinite steps(8);\\n}\\n@keyframes fa-spin {\\n  0% {\\n    transform: rotate(0deg);\\n  }\\n  100% {\\n    transform: rotate(360deg);\\n  }\\n}\\n</style>\\n\\n<script>\\n  let className;\\n\\n  export { className as class };\\n\\n  export let width;\\n  export let height;\\n  export let box;\\n\\n  export let spin = false;\\n  export let inverse = false;\\n  export let pulse = false;\\n  export let flip = null;\\n\\n  // optionals\\n  export let x = undefined;\\n  export let y = undefined;\\n  export let style = undefined;\\n  export let label = undefined;\\n</script>\\n\"],\"names\":[],\"mappings\":\"AAYA,QAAQ,eAAC,CAAC,AACR,OAAO,CAAE,YAAY,CACrB,IAAI,CAAE,YAAY,AACpB,CAAC,AACD,mBAAmB,eAAC,CAAC,AACnB,SAAS,CAAE,MAAM,EAAE,CAAC,CAAC,CAAC,CAAC,AACzB,CAAC,AACD,iBAAiB,eAAC,CAAC,AACjB,SAAS,CAAE,MAAM,CAAC,CAAC,CAAC,EAAE,CAAC,AACzB,CAAC,AACD,QAAQ,eAAC,CAAC,AACR,SAAS,CAAE,sBAAO,CAAC,EAAE,CAAC,EAAE,CAAC,QAAQ,CAAC,MAAM,AAC1C,CAAC,AACD,WAAW,eAAC,CAAC,AACX,KAAK,CAAE,IAAI,AACb,CAAC,AACD,SAAS,eAAC,CAAC,AACT,SAAS,CAAE,sBAAO,CAAC,EAAE,CAAC,QAAQ,CAAC,MAAM,CAAC,CAAC,AACzC,CAAC,AACD,WAAW,sBAAQ,CAAC,AAClB,EAAE,AAAC,CAAC,AACF,SAAS,CAAE,OAAO,IAAI,CAAC,AACzB,CAAC,AACD,IAAI,AAAC,CAAC,AACJ,SAAS,CAAE,OAAO,MAAM,CAAC,AAC3B,CAAC,AACH,CAAC\"}"
 };
 
-async function preload({ params }) {
-	// the `slug` parameter is available because
-	// this file is called [slug].svelte
-	const res = await this.fetch(`blog/${params.slug}.json`);
-
-	const data = await res.json();
-
-	if (res.status === 200) {
-		return { post: data };
-	} else {
-		this.error(res.status, data.message);
-	}
-}
-
-const U5Bslugu5D = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-	let { post } = $$props;
-	if ($$props.post === void 0 && $$bindings.post && post !== void 0) $$bindings.post(post);
+const Svg = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+	let { class: className } = $$props;
+	let { width } = $$props;
+	let { height } = $$props;
+	let { box } = $$props;
+	let { spin = false } = $$props;
+	let { inverse = false } = $$props;
+	let { pulse = false } = $$props;
+	let { flip = null } = $$props;
+	let { x = undefined } = $$props;
+	let { y = undefined } = $$props;
+	let { style = undefined } = $$props;
+	let { label = undefined } = $$props;
+	if ($$props.class === void 0 && $$bindings.class && className !== void 0) $$bindings.class(className);
+	if ($$props.width === void 0 && $$bindings.width && width !== void 0) $$bindings.width(width);
+	if ($$props.height === void 0 && $$bindings.height && height !== void 0) $$bindings.height(height);
+	if ($$props.box === void 0 && $$bindings.box && box !== void 0) $$bindings.box(box);
+	if ($$props.spin === void 0 && $$bindings.spin && spin !== void 0) $$bindings.spin(spin);
+	if ($$props.inverse === void 0 && $$bindings.inverse && inverse !== void 0) $$bindings.inverse(inverse);
+	if ($$props.pulse === void 0 && $$bindings.pulse && pulse !== void 0) $$bindings.pulse(pulse);
+	if ($$props.flip === void 0 && $$bindings.flip && flip !== void 0) $$bindings.flip(flip);
+	if ($$props.x === void 0 && $$bindings.x && x !== void 0) $$bindings.x(x);
+	if ($$props.y === void 0 && $$bindings.y && y !== void 0) $$bindings.y(y);
+	if ($$props.style === void 0 && $$bindings.style && style !== void 0) $$bindings.style(style);
+	if ($$props.label === void 0 && $$bindings.label && label !== void 0) $$bindings.label(label);
 	$$result.css.add(css$3);
 
-	return `${($$result.head += `${($$result.title = `<title>${escape(post.title)}</title>`, "")}`, "")}
-
-<h1>${escape(post.title)}</h1>
-
-<div class="${"content svelte-emm3f3"}"><!-- HTML_TAG_START -->${post.html}<!-- HTML_TAG_END --></div>`;
+	return `<svg version="${"1.1"}" class="${[
+		"fa-icon " + escape(className) + " svelte-1dof0an",
+		(spin ? "fa-spin" : "") + " " + (pulse ? "fa-pulse" : "") + " " + (inverse ? "fa-inverse" : "") + " " + (flip === "horizontal" ? "fa-flip-horizontal" : "") + " " + (flip === "vertical" ? "fa-flip-vertical" : "")
+	].join(" ").trim()}"${add_attribute("x", x, 0)}${add_attribute("y", y, 0)}${add_attribute("width", width, 0)}${add_attribute("height", height, 0)}${add_attribute("aria-label", label, 0)}${add_attribute("role", label ? "img" : "presentation", 0)}${add_attribute("viewBox", box, 0)}${add_attribute("style", style, 0)}>${slots.default ? slots.default({}) : ``}</svg>`;
 });
 
-var component_5 = /*#__PURE__*/Object.freeze({
-	__proto__: null,
-	'default': U5Bslugu5D,
-	preload: preload
+/* node_modules/svelte-awesome/components/Icon.svelte generated by Svelte v3.38.3 */
+let outerScale = 1;
+
+function normaliseData(data) {
+	if ("iconName" in data && "icon" in data) {
+		let normalisedData = {};
+		let faIcon = data.icon;
+		let name = data.iconName;
+		let width = faIcon[0];
+		let height = faIcon[1];
+		let paths = faIcon[4];
+		let iconData = { width, height, paths: [{ d: paths }] };
+		normalisedData[name] = iconData;
+		return normalisedData;
+	}
+
+	return data;
+}
+
+const Icon = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+	let { class: className = "" } = $$props;
+	let { data } = $$props;
+	let { scale = 1 } = $$props;
+	let { spin = false } = $$props;
+	let { inverse = false } = $$props;
+	let { pulse = false } = $$props;
+	let { flip = null } = $$props;
+	let { label = null } = $$props;
+	let { self = null } = $$props;
+	let { style = null } = $$props;
+	let width;
+	let height;
+	let combinedStyle;
+	let box;
+
+	function init() {
+		if (typeof data === "undefined") {
+			return;
+		}
+
+		const normalisedData = normaliseData(data);
+		const [name] = Object.keys(normalisedData);
+		const icon = normalisedData[name];
+
+		if (!icon.paths) {
+			icon.paths = [];
+		}
+
+		if (icon.d) {
+			icon.paths.push({ d: icon.d });
+		}
+
+		if (!icon.polygons) {
+			icon.polygons = [];
+		}
+
+		if (icon.points) {
+			icon.polygons.push({ points: icon.points });
+		}
+
+		self = icon;
+	}
+
+	function normalisedScale() {
+		let numScale = 1;
+
+		if (typeof scale !== "undefined") {
+			numScale = Number(scale);
+		}
+
+		if (isNaN(numScale) || numScale <= 0) {
+			// eslint-disable-line no-restricted-globals
+			console.warn("Invalid prop: prop \"scale\" should be a number over 0."); // eslint-disable-line no-console
+
+			return outerScale;
+		}
+
+		return numScale * outerScale;
+	}
+
+	function calculateBox() {
+		if (self) {
+			return `0 0 ${self.width} ${self.height}`;
+		}
+
+		return `0 0 ${width} ${height}`;
+	}
+
+	function calculateRatio() {
+		if (!self) {
+			return 1;
+		}
+
+		return Math.max(self.width, self.height) / 16;
+	}
+
+	function calculateWidth() {
+
+		if (self) {
+			return self.width / calculateRatio() * normalisedScale();
+		}
+
+		return 0;
+	}
+
+	function calculateHeight() {
+
+		if (self) {
+			return self.height / calculateRatio() * normalisedScale();
+		}
+
+		return 0;
+	}
+
+	function calculateStyle() {
+		let combined = "";
+
+		if (style !== null) {
+			combined += style;
+		}
+
+		let size = normalisedScale();
+
+		if (size === 1) {
+			if (combined.length === 0) {
+				return undefined;
+			}
+
+			return combined;
+		}
+
+		if (combined !== "" && !combined.endsWith(";")) {
+			combined += "; ";
+		}
+
+		return `${combined}font-size: ${size}em`;
+	}
+
+	if ($$props.class === void 0 && $$bindings.class && className !== void 0) $$bindings.class(className);
+	if ($$props.data === void 0 && $$bindings.data && data !== void 0) $$bindings.data(data);
+	if ($$props.scale === void 0 && $$bindings.scale && scale !== void 0) $$bindings.scale(scale);
+	if ($$props.spin === void 0 && $$bindings.spin && spin !== void 0) $$bindings.spin(spin);
+	if ($$props.inverse === void 0 && $$bindings.inverse && inverse !== void 0) $$bindings.inverse(inverse);
+	if ($$props.pulse === void 0 && $$bindings.pulse && pulse !== void 0) $$bindings.pulse(pulse);
+	if ($$props.flip === void 0 && $$bindings.flip && flip !== void 0) $$bindings.flip(flip);
+	if ($$props.label === void 0 && $$bindings.label && label !== void 0) $$bindings.label(label);
+	if ($$props.self === void 0 && $$bindings.self && self !== void 0) $$bindings.self(self);
+	if ($$props.style === void 0 && $$bindings.style && style !== void 0) $$bindings.style(style);
+	let $$settled;
+	let $$rendered;
+
+	do {
+		$$settled = true;
+
+		{
+			{
+				init();
+				width = calculateWidth();
+				height = calculateHeight();
+				combinedStyle = calculateStyle();
+				box = calculateBox();
+			}
+		}
+
+		$$rendered = `${validate_component(Svg, "Svg").$$render(
+			$$result,
+			{
+				label,
+				width,
+				height,
+				box,
+				style: combinedStyle,
+				spin,
+				flip,
+				inverse,
+				pulse,
+				class: className
+			},
+			{},
+			{
+				default: () => `${slots.default
+				? slots.default({})
+				: `
+    ${self
+					? `${self.paths
+						? `${each(self.paths, (path, i) => `${validate_component(Path, "Path").$$render($$result, { id: i, data: path }, {}, {})}`)}`
+						: ``}
+      ${self.polygons
+						? `${each(self.polygons, (polygon, i) => `${validate_component(Polygon, "Polygon").$$render($$result, { id: i, data: polygon }, {}, {})}`)}`
+						: ``}
+      ${self.raw
+						? `${validate_component(Raw, "Raw").$$render(
+								$$result,
+								{ data: self },
+								{
+									data: $$value => {
+										self = $$value;
+										$$settled = false;
+									}
+								},
+								{}
+							)}`
+						: ``}`
+					: ``}
+  `}`
+			}
+		)}`;
+	} while (!$$settled);
+
+	return $$rendered;
 });
 
-/* src/components/Nav.svelte generated by Svelte v3.38.3 */
+var eye = { eye: { width: 1792, height: 1792, paths: [{ d: 'M1664 960q-152-236-381-353 61 104 61 225 0 185-131.5 316.5t-316.5 131.5-316.5-131.5-131.5-316.5q0-121 61-225-229 117-381 353 133 205 333.5 326.5t434.5 121.5 434.5-121.5 333.5-326.5zM944 576q0-20-14-34t-34-14q-125 0-214.5 89.5t-89.5 214.5q0 20 14 34t34 14 34-14 14-34q0-86 61-147t147-61q20 0 34-14t14-34zM1792 960q0 34-20 69-140 230-376.5 368.5t-499.5 138.5-499.5-139-376.5-368q-20-35-20-69t20-69q140-229 376.5-368t499.5-139 499.5 139 376.5 368q20 35 20 69z' }] } };
 
-const css$2 = {
-	code: "nav.svelte-1dbd5up{border-bottom:1px solid rgba(255,62,0,0.1);font-weight:300;padding:0 1em}ul.svelte-1dbd5up{margin:0;padding:0}ul.svelte-1dbd5up::after{content:'';display:block;clear:both}li.svelte-1dbd5up{display:block;float:left}[aria-current].svelte-1dbd5up{position:relative;display:inline-block}[aria-current].svelte-1dbd5up::after{position:absolute;content:'';width:calc(100% - 1em);height:2px;background-color:rgb(255,62,0);display:block;bottom:-1px}a.svelte-1dbd5up{text-decoration:none;padding:1em 0.5em;display:block}",
-	map: "{\"version\":3,\"file\":\"Nav.svelte\",\"sources\":[\"Nav.svelte\"],\"sourcesContent\":[\"<script>\\n\\texport let segment;\\n</script>\\n\\n<style>\\n\\tnav {\\n\\t\\tborder-bottom: 1px solid rgba(255,62,0,0.1);\\n\\t\\tfont-weight: 300;\\n\\t\\tpadding: 0 1em;\\n\\t}\\n\\n\\tul {\\n\\t\\tmargin: 0;\\n\\t\\tpadding: 0;\\n\\t}\\n\\n\\t/* clearfix */\\n\\tul::after {\\n\\t\\tcontent: '';\\n\\t\\tdisplay: block;\\n\\t\\tclear: both;\\n\\t}\\n\\n\\tli {\\n\\t\\tdisplay: block;\\n\\t\\tfloat: left;\\n\\t}\\n\\n\\t[aria-current] {\\n\\t\\tposition: relative;\\n\\t\\tdisplay: inline-block;\\n\\t}\\n\\n\\t[aria-current]::after {\\n\\t\\tposition: absolute;\\n\\t\\tcontent: '';\\n\\t\\twidth: calc(100% - 1em);\\n\\t\\theight: 2px;\\n\\t\\tbackground-color: rgb(255,62,0);\\n\\t\\tdisplay: block;\\n\\t\\tbottom: -1px;\\n\\t}\\n\\n\\ta {\\n\\t\\ttext-decoration: none;\\n\\t\\tpadding: 1em 0.5em;\\n\\t\\tdisplay: block;\\n\\t}\\n</style>\\n\\n<nav>\\n\\t<ul>\\n\\t\\t<li><a aria-current=\\\"{segment === undefined ? 'page' : undefined}\\\" href=\\\".\\\">home</a></li>\\n\\t\\t<li><a aria-current=\\\"{segment === 'login' ? 'page' : undefined}\\\" href=\\\"login\\\">login</a></li>\\n\\t\\t<li><a aria-current=\\\"{segment === 'dashboard' ? 'page' : undefined}\\\" href=\\\"dashboard\\\">dashboard</a></li>\\n\\t</ul>\\n</nav>\\n\"],\"names\":[],\"mappings\":\"AAKC,GAAG,eAAC,CAAC,AACJ,aAAa,CAAE,GAAG,CAAC,KAAK,CAAC,KAAK,GAAG,CAAC,EAAE,CAAC,CAAC,CAAC,GAAG,CAAC,CAC3C,WAAW,CAAE,GAAG,CAChB,OAAO,CAAE,CAAC,CAAC,GAAG,AACf,CAAC,AAED,EAAE,eAAC,CAAC,AACH,MAAM,CAAE,CAAC,CACT,OAAO,CAAE,CAAC,AACX,CAAC,AAGD,iBAAE,OAAO,AAAC,CAAC,AACV,OAAO,CAAE,EAAE,CACX,OAAO,CAAE,KAAK,CACd,KAAK,CAAE,IAAI,AACZ,CAAC,AAED,EAAE,eAAC,CAAC,AACH,OAAO,CAAE,KAAK,CACd,KAAK,CAAE,IAAI,AACZ,CAAC,AAED,CAAC,YAAY,CAAC,eAAC,CAAC,AACf,QAAQ,CAAE,QAAQ,CAClB,OAAO,CAAE,YAAY,AACtB,CAAC,AAED,CAAC,YAAY,gBAAC,OAAO,AAAC,CAAC,AACtB,QAAQ,CAAE,QAAQ,CAClB,OAAO,CAAE,EAAE,CACX,KAAK,CAAE,KAAK,IAAI,CAAC,CAAC,CAAC,GAAG,CAAC,CACvB,MAAM,CAAE,GAAG,CACX,gBAAgB,CAAE,IAAI,GAAG,CAAC,EAAE,CAAC,CAAC,CAAC,CAC/B,OAAO,CAAE,KAAK,CACd,MAAM,CAAE,IAAI,AACb,CAAC,AAED,CAAC,eAAC,CAAC,AACF,eAAe,CAAE,IAAI,CACrB,OAAO,CAAE,GAAG,CAAC,KAAK,CAClB,OAAO,CAAE,KAAK,AACf,CAAC\"}"
-};
-
-const Nav = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-	let { segment } = $$props;
-	if ($$props.segment === void 0 && $$bindings.segment && segment !== void 0) $$bindings.segment(segment);
-	$$result.css.add(css$2);
-
-	return `<nav class="${"svelte-1dbd5up"}"><ul class="${"svelte-1dbd5up"}"><li class="${"svelte-1dbd5up"}"><a${add_attribute("aria-current", segment === undefined ? "page" : undefined, 0)} href="${"."}" class="${"svelte-1dbd5up"}">home</a></li>
-		<li class="${"svelte-1dbd5up"}"><a${add_attribute("aria-current", segment === "login" ? "page" : undefined, 0)} href="${"login"}" class="${"svelte-1dbd5up"}">login</a></li>
-		<li class="${"svelte-1dbd5up"}"><a${add_attribute("aria-current", segment === "dashboard" ? "page" : undefined, 0)} href="${"dashboard"}" class="${"svelte-1dbd5up"}">dashboard</a></li></ul></nav>`;
-});
+const CONTEXT_KEY = {};
 
 /* src/routes/_layout.svelte generated by Svelte v3.38.3 */
 
-const css$1 = {
+const css$2 = {
 	code: "main.svelte-1uhnsl8{position:relative;max-width:56em;background-color:white;padding:2em;margin:0 auto;box-sizing:border-box}",
-	map: "{\"version\":3,\"file\":\"_layout.svelte\",\"sources\":[\"_layout.svelte\"],\"sourcesContent\":[\"<script>\\n\\timport Nav from '../components/Nav.svelte';\\n\\n\\texport let segment;\\n</script>\\n\\n<style>\\n\\tmain {\\n\\t\\tposition: relative;\\n\\t\\tmax-width: 56em;\\n\\t\\tbackground-color: white;\\n\\t\\tpadding: 2em;\\n\\t\\tmargin: 0 auto;\\n\\t\\tbox-sizing: border-box;\\n\\t}\\n</style>\\n\\n<Nav {segment}/>\\n\\n<main>\\n\\t<slot></slot>\\n</main>\"],\"names\":[],\"mappings\":\"AAOC,IAAI,eAAC,CAAC,AACL,QAAQ,CAAE,QAAQ,CAClB,SAAS,CAAE,IAAI,CACf,gBAAgB,CAAE,KAAK,CACvB,OAAO,CAAE,GAAG,CACZ,MAAM,CAAE,CAAC,CAAC,IAAI,CACd,UAAU,CAAE,UAAU,AACvB,CAAC\"}"
+	map: "{\"version\":3,\"file\":\"_layout.svelte\",\"sources\":[\"_layout.svelte\"],\"sourcesContent\":[\"<style>\\n\\tmain {\\n\\t\\tposition: relative;\\n\\t\\tmax-width: 56em;\\n\\t\\tbackground-color: white;\\n\\t\\tpadding: 2em;\\n\\t\\tmargin: 0 auto;\\n\\t\\tbox-sizing: border-box;\\n\\t}\\n</style>\\n\\n<main>\\n\\t<slot></slot>\\n</main>\"],\"names\":[],\"mappings\":\"AACC,IAAI,eAAC,CAAC,AACL,QAAQ,CAAE,QAAQ,CAClB,SAAS,CAAE,IAAI,CACf,gBAAgB,CAAE,KAAK,CACvB,OAAO,CAAE,GAAG,CACZ,MAAM,CAAE,CAAC,CAAC,IAAI,CACd,UAAU,CAAE,UAAU,AACvB,CAAC\"}"
 };
 
 const Layout = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-	let { segment } = $$props;
-	if ($$props.segment === void 0 && $$bindings.segment && segment !== void 0) $$bindings.segment(segment);
-	$$result.css.add(css$1);
-
-	return `${validate_component(Nav, "Nav").$$render($$result, { segment }, {}, {})}
-
-<main class="${"svelte-1uhnsl8"}">${slots.default ? slots.default({}) : ``}</main>`;
+	$$result.css.add(css$2);
+	return `<main class="${"svelte-1uhnsl8"}">${slots.default ? slots.default({}) : ``}</main>`;
 });
 
 var root_comp = /*#__PURE__*/Object.freeze({
-	__proto__: null,
-	'default': Layout
+    __proto__: null,
+    'default': Layout
 });
 
 /* src/routes/_error.svelte generated by Svelte v3.38.3 */
 
-const css = {
+const css$1 = {
 	code: "h1.svelte-8od9u6,p.svelte-8od9u6{margin:0 auto}h1.svelte-8od9u6{font-size:2.8em;font-weight:700;margin:0 0 0.5em 0}p.svelte-8od9u6{margin:1em auto}@media(min-width: 480px){h1.svelte-8od9u6{font-size:4em}}",
 	map: "{\"version\":3,\"file\":\"_error.svelte\",\"sources\":[\"_error.svelte\"],\"sourcesContent\":[\"<script>\\n\\texport let status;\\n\\texport let error;\\n\\n\\tconst dev = undefined === 'development';\\n</script>\\n\\n<style>\\n\\th1, p {\\n\\t\\tmargin: 0 auto;\\n\\t}\\n\\n\\th1 {\\n\\t\\tfont-size: 2.8em;\\n\\t\\tfont-weight: 700;\\n\\t\\tmargin: 0 0 0.5em 0;\\n\\t}\\n\\n\\tp {\\n\\t\\tmargin: 1em auto;\\n\\t}\\n\\n\\t@media (min-width: 480px) {\\n\\t\\th1 {\\n\\t\\t\\tfont-size: 4em;\\n\\t\\t}\\n\\t}\\n</style>\\n\\n<svelte:head>\\n\\t<title>{status}</title>\\n</svelte:head>\\n\\n<h1>{status}</h1>\\n\\n<p>{error.message}</p>\\n\\n{#if dev && error.stack}\\n\\t<pre>{error.stack}</pre>\\n{/if}\\n\"],\"names\":[],\"mappings\":\"AAQC,gBAAE,CAAE,CAAC,cAAC,CAAC,AACN,MAAM,CAAE,CAAC,CAAC,IAAI,AACf,CAAC,AAED,EAAE,cAAC,CAAC,AACH,SAAS,CAAE,KAAK,CAChB,WAAW,CAAE,GAAG,CAChB,MAAM,CAAE,CAAC,CAAC,CAAC,CAAC,KAAK,CAAC,CAAC,AACpB,CAAC,AAED,CAAC,cAAC,CAAC,AACF,MAAM,CAAE,GAAG,CAAC,IAAI,AACjB,CAAC,AAED,MAAM,AAAC,YAAY,KAAK,CAAC,AAAC,CAAC,AAC1B,EAAE,cAAC,CAAC,AACH,SAAS,CAAE,GAAG,AACf,CAAC,AACF,CAAC\"}"
 };
@@ -552,7 +692,7 @@ const Error$1 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 	let { error } = $$props;
 	if ($$props.status === void 0 && $$bindings.status && status !== void 0) $$bindings.status(status);
 	if ($$props.error === void 0 && $$bindings.error && error !== void 0) $$bindings.error(error);
-	$$result.css.add(css);
+	$$result.css.add(css$1);
 
 	return `${($$result.head += `${($$result.title = `<title>${escape(status)}</title>`, "")}`, "")}
 
@@ -562,86 +702,6 @@ const Error$1 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 
 ${``}`;
 });
-
-// This file is generated by Sapper — do not edit it!
-
-const d = decodeURIComponent;
-
-const manifest = {
-	server_routes: [
-		{
-			// blog/index.json.js
-			pattern: /^\/blog\.json$/,
-			handlers: route_0,
-			params: () => ({})
-		},
-
-		{
-			// blog/[slug].json.js
-			pattern: /^\/blog\/([^/]+?)\.json$/,
-			handlers: route_1,
-			params: match => ({ slug: d(match[1]) })
-		}
-	],
-
-	pages: [
-		{
-			// index.svelte
-			pattern: /^\/$/,
-			parts: [
-				{ name: "index", file: "index.svelte", component: component_0 }
-			]
-		},
-
-		{
-			// dashboard.svelte
-			pattern: /^\/dashboard\/?$/,
-			parts: [
-				{ name: "dashboard", file: "dashboard.svelte", component: component_1 }
-			]
-		},
-
-		{
-			// about.svelte
-			pattern: /^\/about\/?$/,
-			parts: [
-				{ name: "about", file: "about.svelte", component: component_2 }
-			]
-		},
-
-		{
-			// login.svelte
-			pattern: /^\/login\/?$/,
-			parts: [
-				{ name: "login", file: "login.svelte", component: component_3 }
-			]
-		},
-
-		{
-			// blog/index.svelte
-			pattern: /^\/blog\/?$/,
-			parts: [
-				{ name: "blog", file: "blog/index.svelte", component: component_4 }
-			]
-		},
-
-		{
-			// blog/[slug].svelte
-			pattern: /^\/blog\/([^/]+?)\/?$/,
-			parts: [
-				null,
-				{ name: "blog_$slug", file: "blog/[slug].svelte", component: component_5, params: match => ({ slug: d(match[1]) }) }
-			]
-		}
-	],
-
-	root_comp,
-	error: Error$1
-};
-
-const build_dir = "__sapper__/build";
-
-const CONTEXT_KEY = {};
 
 /* src/node_modules/@sapper/internal/App.svelte generated by Svelte v3.38.3 */
 
@@ -672,6 +732,133 @@ ${validate_component(Layout, "Layout").$$render($$result, Object.assign({ segmen
 		: `${validate_component(level1.component || missing_component, "svelte:component").$$render($$result, Object.assign(level1.props), {}, {})}`}`
 	})}`;
 });
+
+/*! *****************************************************************************
+Copyright (c) Microsoft Corporation.
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THIS SOFTWARE.
+***************************************************************************** */
+
+function __awaiter$1(thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+}
+
+function page_store(value) {
+    const store = writable(value);
+    let ready = true;
+    function notify() {
+        ready = true;
+        store.update(val => val);
+    }
+    function set(new_value) {
+        ready = false;
+        store.set(new_value);
+    }
+    function subscribe(run) {
+        let old_value;
+        return store.subscribe((new_value) => {
+            if (old_value === undefined || (ready && new_value !== old_value)) {
+                run(old_value = new_value);
+            }
+        });
+    }
+    return { notify, set, subscribe };
+}
+
+const initial_data = typeof __SAPPER__ !== 'undefined' && __SAPPER__;
+const stores = {
+    page: page_store({}),
+    preloading: writable(null),
+    session: writable(initial_data && initial_data.session)
+};
+stores.session.subscribe((value) => __awaiter$1(void 0, void 0, void 0, function* () {
+    return;
+}));
+
+/* src/routes/login.svelte generated by Svelte v3.38.3 */
+
+const css = {
+	code: "div.svelte-5qlnod.svelte-5qlnod{background-color:#F6F4F4;padding:8%}div.svelte-5qlnod div.svelte-5qlnod{background-color:#F6F4F4;padding:0 0;margin:0 0}h1.svelte-5qlnod.svelte-5qlnod{color:black;font-family:'Montserrat';font-weight:'bold';font-size:2em}input.svelte-5qlnod.svelte-5qlnod{width:80%;padding:12px 20px;margin:8px 0;border:none}button.svelte-5qlnod.svelte-5qlnod{font-family:'Montserrat';text-transform:uppercase;border:none;background-color:#5D2828;color:white;height:50%;width:86%;cursor:pointer;padding:12px 20px;margin:8px 0}button.svelte-5qlnod.svelte-5qlnod:hover{background-color:#893838}button.svelte-5qlnod.svelte-5qlnod:active{background-color:#5D2828}",
+	map: "{\"version\":3,\"file\":\"login.svelte\",\"sources\":[\"login.svelte\"],\"sourcesContent\":[\"\\n<style>\\n\\n    div {\\n        background-color: #F6F4F4;\\n        padding: 8%;\\n    }\\n\\n    div div {\\n        background-color: #F6F4F4;\\n        padding: 0 0;\\n        margin: 0 0;\\n    }\\n\\n    /*:global(body){\\n                background: #F6F4F4;\\n    }*/\\n\\n\\th1 {\\n\\t\\tcolor: black;\\n\\t\\tfont-family: 'Montserrat';\\n\\t\\tfont-weight: 'bold';\\n\\t\\tfont-size: 2em;\\n\\t}\\n\\n\\tinput {\\n      width: 80%;\\n      padding: 12px 20px;\\n      margin: 8px 0;\\n      border: none;\\n\\t}\\n\\n\\tbutton {\\n\\t   font-family: 'Montserrat';\\n\\t   text-transform: uppercase;\\n       border: none;\\n       background-color: #5D2828;\\n       color: white;\\n       height: 50%;\\n       width: 86%;\\n       cursor: pointer;\\n       padding: 12px 20px;\\n       margin: 8px 0;\\n\\t}\\n\\n    button:hover {\\n       background-color: #893838;\\n    }\\n\\n     button:active {\\n       background-color: #5D2828;\\n     }\\n\\n</style>\\n\\n<script>\\n  import Icon from 'svelte-awesome/components/Icon.svelte'\\n  import { eye } from 'svelte-awesome/icons';\\n  import {goto} from '@sapper/app';\\n  import { doLogin } from './_login';\\n  import { doGetArticles } from './_login';\\n\\n  let email = '';\\n  let password = '';\\n  let pw_visible = false;\\n\\n\\tasync function login() {\\n        console.log('login');\\n        let r = await doLogin(email, password);\\n        console.log(r);\\n        if (r.status == 'success') {\\n            goto('dashboard');\\n        } else {\\n            goto('.');\\n        }\\n\\t}\\n\\n    function toggle() {\\n        pw_visible = !pw_visible;\\n        document.querySelector('#password').type = pw_visible ? 'text' : 'password';\\n    } \\n</script>\\n\\n\\n\\n<svelte:head>\\n\\t<title>Login</title>\\n</svelte:head>\\n<br />\\n<br />\\n<h1>CONNECT TO SAKURA.ECO</h1>\\n<div>\\n    <div>\\n        <input type=\\\"email\\\" id=\\\"email\\\" bind:value={email} placeholder=\\\"Email\\\">\\n        <br />\\n        <div>\\n        <input type=\\\"password\\\" id=\\\"password\\\" bind:value={password} placeholder=\\\"Password\\\">\\n        <button on:click={toggle}><Icon data={eye} /></button>\\n        </div>\\n        <br />\\n        <button on:click|once={login}>\\n            Sign In\\n        </button>\\n        \\n    </div>\\n</div>\\n\"],\"names\":[],\"mappings\":\"AAGI,GAAG,4BAAC,CAAC,AACD,gBAAgB,CAAE,OAAO,CACzB,OAAO,CAAE,EAAE,AACf,CAAC,AAED,iBAAG,CAAC,GAAG,cAAC,CAAC,AACL,gBAAgB,CAAE,OAAO,CACzB,OAAO,CAAE,CAAC,CAAC,CAAC,CACZ,MAAM,CAAE,CAAC,CAAC,CAAC,AACf,CAAC,AAMJ,EAAE,4BAAC,CAAC,AACH,KAAK,CAAE,KAAK,CACZ,WAAW,CAAE,YAAY,CACzB,WAAW,CAAE,MAAM,CACnB,SAAS,CAAE,GAAG,AACf,CAAC,AAED,KAAK,4BAAC,CAAC,AACF,KAAK,CAAE,GAAG,CACV,OAAO,CAAE,IAAI,CAAC,IAAI,CAClB,MAAM,CAAE,GAAG,CAAC,CAAC,CACb,MAAM,CAAE,IAAI,AACjB,CAAC,AAED,MAAM,4BAAC,CAAC,AACL,WAAW,CAAE,YAAY,CACzB,cAAc,CAAE,SAAS,CACtB,MAAM,CAAE,IAAI,CACZ,gBAAgB,CAAE,OAAO,CACzB,KAAK,CAAE,KAAK,CACZ,MAAM,CAAE,GAAG,CACX,KAAK,CAAE,GAAG,CACV,MAAM,CAAE,OAAO,CACf,OAAO,CAAE,IAAI,CAAC,IAAI,CAClB,MAAM,CAAE,GAAG,CAAC,CAAC,AACnB,CAAC,AAEE,kCAAM,MAAM,AAAC,CAAC,AACX,gBAAgB,CAAE,OAAO,AAC5B,CAAC,AAEA,kCAAM,OAAO,AAAC,CAAC,AACb,gBAAgB,CAAE,OAAO,AAC3B,CAAC\"}"
+};
+
+const Login = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+	let email = "";
+	let password = "";
+
+	$$result.css.add(css);
+
+	return `${($$result.head += `${($$result.title = `<title>Login</title>`, "")}`, "")}
+<br>
+<br>
+<h1 class="${"svelte-5qlnod"}">CONNECT TO SAKURA.ECO</h1>
+<div class="${"svelte-5qlnod"}"><div class="${"svelte-5qlnod"}"><input type="${"email"}" id="${"email"}" placeholder="${"Email"}" class="${"svelte-5qlnod"}"${add_attribute("value", email, 1)}>
+        <br>
+        <div class="${"svelte-5qlnod"}"><input type="${"password"}" id="${"password"}" placeholder="${"Password"}" class="${"svelte-5qlnod"}"${add_attribute("value", password, 1)}>
+        <button class="${"svelte-5qlnod"}">${validate_component(Icon, "Icon").$$render($$result, { data: eye }, {}, {})}</button></div>
+        <br>
+        <button class="${"svelte-5qlnod"}">Sign In
+        </button></div></div>`;
+});
+
+var component_2 = /*#__PURE__*/Object.freeze({
+    __proto__: null,
+    'default': Login
+});
+
+// This file is generated by Sapper — do not edit it!
+
+const manifest = {
+	server_routes: [
+		
+	],
+
+	pages: [
+		{
+			// index.svelte
+			pattern: /^\/$/,
+			parts: [
+				{ name: "index", file: "index.svelte", component: component_0 }
+			]
+		},
+
+		{
+			// dashboard.svelte
+			pattern: /^\/dashboard\/?$/,
+			parts: [
+				{ name: "dashboard", file: "dashboard.svelte", component: component_1 }
+			]
+		},
+
+		{
+			// login.svelte
+			pattern: /^\/login\/?$/,
+			parts: [
+				{ name: "login", file: "login.svelte", component: component_2 }
+			]
+		}
+	],
+
+	root_comp,
+	error: Error$1
+};
+
+const build_dir = "__sapper__/build";
 
 /**
  * @param typeMap [Object] Map of MIME type -> Array[extensions]

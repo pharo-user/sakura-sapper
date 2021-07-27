@@ -9,6 +9,9 @@ sapper.start({
 	// get the shop id from the url and save it using a store
 	console.log('client-side app has started');
 	let shop_id = urlParams.get('shop');
+	if (shop_id == undefined) {
+		shop_id = 'demo/myshopify.com';
+	}
 	shop.setShop(shop_id);
 	console.log('shop '+shop_id);
 });

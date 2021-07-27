@@ -16,11 +16,11 @@
 <table>
     <tr>
     <th>VIEWS</th>
-    <td>385</td>
+    <td>0</td>
     </tr>
     <tr>
     <th>CLICKS</th>
-    <td>11</td>
+    <td>0</td>
     </tr>
     <tr>
     <th>REVENUES</th>

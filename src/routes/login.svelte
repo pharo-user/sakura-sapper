@@ -54,45 +54,53 @@
 </style>
 
 <script>
+  import Icon from 'svelte-awesome/components/Icon.svelte'
+  import { eye } from 'svelte-awesome/icons';
+  import {goto} from '@sapper/app';
   import { doLogin } from './_login';
   import { doGetArticles } from './_login';
-  import { onMount } from "svelte";
 
   let email = '';
   let password = '';
+  let pw_visible = false;
 
-	function test() {
-    console.log('test');
-    let r = doGetArticles(123);
-    console.log(r);
+	async function login() {
+        console.log('login');
+        let r = await doLogin(email, password);
+        console.log(r);
+        if (r.status == 'success') {
+            goto('dashboard');
+        } else {
+            goto('.');
+        }
 	}
-	function login() {
-    console.log('login');
-    let r = doLogin(email, password);
-    console.log(r);
-	}
+
+    function toggle() {
+        pw_visible = !pw_visible;
+        document.querySelector('#password').type = pw_visible ? 'text' : 'password';
+    } 
 </script>
 
 
 
 <svelte:head>
-	<title>About</title>
+	<title>Login</title>
 </svelte:head>
 <br />
 <br />
 <h1>CONNECT TO SAKURA.ECO</h1>
 <div>
     <div>
-        <input bind:value={email} placeholder="Email">
+        <input type="email" id="email" bind:value={email} placeholder="Email">
         <br />
-        <input bind:value={password} placeholder="Password">
+        <div>
+        <input type="password" id="password" bind:value={password} placeholder="Password">
+        <button on:click={toggle}><Icon data={eye} /></button>
+        </div>
         <br />
         <button on:click|once={login}>
             Sign In
         </button>
-        <br />
-        <button on:click|once={test}>
-            Test
-        </button>
+        
     </div>
 </div>
