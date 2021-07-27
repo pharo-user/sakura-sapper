@@ -51,6 +51,15 @@
        background-color: #5D2828;
      }
 
+    .passwordField button {
+        position: absolute;
+        background-color: transparent;
+        color: black;
+        margin-left: -50px;
+        height: 40px;
+        width: 50px;
+    }
+
 </style>
 
 <script>
@@ -94,8 +103,10 @@
         <input type="email" id="email" bind:value={email} placeholder="Email">
         <br />
         <div>
-        <input type="password" id="password" bind:value={password} placeholder="Password">
-        <button on:click={toggle}><Icon data={eye} /></button>
+        <div class="passwordField">
+            <input type="password" id="password" bind:value={password} placeholder="Password">
+            <button on:click={toggle}><Icon data={eye} /></button>
+        </div>
         </div>
         <br />
         <button on:click|once={login}>
