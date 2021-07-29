@@ -97,8 +97,8 @@
 </svelte:head>
 <br />
 <br />
-<h1>CONNECT TO SAKURA.ECO</h1>
 <div>
+    <h1>CONNECT TO SAKURA.ECO</h1>
     <div>
         <input type="email" id="email" bind:value={email} placeholder="Email">
         <br />
