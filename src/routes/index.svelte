@@ -4,10 +4,19 @@
 
 <style>
 
-    div {
+	div {
         background-color: #F6F4F4;
-        padding: 10%;
+        padding: 7%;
     }
+
+	h1 {
+		color: black;
+		font-family: 'Montserrat';
+		font-weight: 'bold';
+		font-size: 2em;
+	}
+
+
 
 	p {
 		text-align: center;
@@ -27,12 +36,15 @@
 <br />
 <br />
 <div>
-	<h2>SAKURA NETWORK App is installed</h2>
-	<h3>{$shop}</h3>
+	<h1>SAKURA NETWORK</h1>
+	
 	<br />
-	<br />
-	<p>In order to see current statistics please click
+	<p>App succesfully installed</p> 
+	<p>Please click
 	<a href='.\login'> here </a>
 	and enter your credentials</p>
+	<p> then you can use this app to import products</p>
+	<p> and to install our widget in your shop {$shop}
+	</p>
 	
 </div>

@@ -2,11 +2,7 @@
   "bundler": "rollup",
   "shimport": "2.0.4",
   "assets": {
-<<<<<<< HEAD
-    "main": "client.9cd97d4c.js"
-=======
-    "main": "client.d2857a6c.js"
->>>>>>> 2616549bf3e9547d5103d508cae3b28d8a818161
+    "main": "client.5e51d076.js"
   },
   "css": {
     "main": [
@@ -15,38 +11,22 @@
   },
   "dependencies": {
     "index.svelte": [
-<<<<<<< HEAD
-      "index.6b8d55ff.js",
-=======
-      "index.009fe7fd.js",
->>>>>>> 2616549bf3e9547d5103d508cae3b28d8a818161
+      "index.a3cc8d59.js",
       "inject_styles.5607aec6.js",
-      "index-ea8cb081.css"
+      "index-a70e60ca.css"
     ],
     "dashboard.svelte": [
-<<<<<<< HEAD
-      "dashboard.474aac55.js",
-=======
-      "dashboard.b715c134.js",
->>>>>>> 2616549bf3e9547d5103d508cae3b28d8a818161
+      "dashboard.49b20aae.js",
       "inject_styles.5607aec6.js",
-      "dashboard-94b3f808.css"
+      "dashboard-7796af9b.css"
     ],
     "_login.js": [
-<<<<<<< HEAD
-      "login.e5e0f7e1.js",
-=======
-      "login.48601f1a.js",
->>>>>>> 2616549bf3e9547d5103d508cae3b28d8a818161
+      "login.bb2ebdf9.js",
       "inject_styles.5607aec6.js",
       "login-228ea7ec.css"
     ],
     "login.svelte": [
-<<<<<<< HEAD
-      "login.e5e0f7e1.js",
-=======
-      "login.48601f1a.js",
->>>>>>> 2616549bf3e9547d5103d508cae3b28d8a818161
+      "login.bb2ebdf9.js",
       "inject_styles.5607aec6.js",
       "login-228ea7ec.css"
     ]
