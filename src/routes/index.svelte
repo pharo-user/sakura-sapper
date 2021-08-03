@@ -41,7 +41,7 @@
 	<br />
 	<p>App succesfully installed</p> 
 	<p>Please click
-	<a href='.\login'> here </a>
+	<a href='./login'> here </a>
 	and enter your credentials</p>
 	<p> then you can use this app to import products</p>
 	<p> and to install our widget in your shop {$shop}

@@ -32,6 +32,10 @@ open browser on 127.0.0.1:3000/shopify3
 
 npm run export
 
+run it with:  npx serve __sapper__/export
+
+http://localhost:5000
+
 ## how to set shop id
 
 http://127.0.0.1:5000/shopify3/?shop=shop1.sakura.shopify.com

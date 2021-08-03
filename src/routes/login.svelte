@@ -78,9 +78,9 @@
         let r = await doLogin(email, password);
         console.log(r);
         if (r.status == 'success') {
-            goto('dashboard');
+            goto('./dashboard');
         } else {
-            goto('.');
+            goto('./');
         }
 	}
 
@@ -88,6 +88,10 @@
         pw_visible = !pw_visible;
         document.querySelector('#password').type = pw_visible ? 'text' : 'password';
     } 
+
+    function dashboard() {
+        goto('./dashboard');
+    }
 </script>
 
 
@@ -113,5 +117,6 @@
             Sign In
         </button>
         
+        <button on:click={dashboard}>Dashboard</button>
     </div>
 </div>
