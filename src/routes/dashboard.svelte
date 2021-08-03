@@ -1,16 +1,44 @@
 <script>
-	import Statistics from '../components/Statistics.svelte';
+	//import Statistics from '../components/Statistics.svelte';
+	import { doImportArticles } from './_import';
+	import { doInstallWidget } from './_widget';
+
 	import { shop } from '../components/stores.js';
+	
+	import promiser from '../components/promiser.js'
+	import LoadingIndicator from '../components/LoadingIndicator.svelte'
+	let loading = false
 
     let shop_url = 'https://'+$shop;
 
-	function import_product() {
-  
+	async function import_product() {
+		console.log('import');
+        let r = await doImportProduct(shop);
+        console.log(r);
+        if (r.status == 'success') {
+            goto('./dashboard');
+        } else {
+            goto('./');
+        }
     } 
 
-	function install_widget() {
+	async function install_widget() {
+		console.log('install');
+        let r = await doInstallWidget(shop);
+        console.log(r);
+        if (r.status == 'success') {
+            goto('./dashboard');
+        } else {
+            goto('./');
+        }
        
     } 
+
+	async function delay(){
+	return await new Promise(resolve => setTimeout(resolve, 3000))
+}
+
+
 
 </script>
 
@@ -66,14 +94,20 @@
     <h2>STATISTICS</h2>
     <Statistics></Statistics>
 	-->
-	<button on:click|once={install_widget}>
+	<button on:click={ ()=>promiser(install_widget(), status => loading = status)}>
 		Install Widget
 	</button>
 
-	<button on:click|once={import_product}>
+	<button on:click={ ()=>promiser(import_product(), status => loading = status)}>
 		Import Product
 	</button>
-
+	<div>
+		{#if loading}
+		<LoadingIndicator/>
+		{/if}
+	
+	</div>
+	
     <p>click <a href={shop_url}> here</a> to go back to the shop</p>
 </div>
 

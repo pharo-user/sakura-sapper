@@ -67,7 +67,6 @@
   import { eye } from 'svelte-awesome/icons';
   import {goto} from '@sapper/app';
   import { doLogin } from './_login';
-  import { doGetArticles } from './_login';
 
   let email = '';
   let password = '';
@@ -116,7 +115,8 @@
         <button on:click|once={login}>
             Sign In
         </button>
-        
+        <!--
         <button on:click={dashboard}>Dashboard</button>
+         -->
     </div>
 </div>
