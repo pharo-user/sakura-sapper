@@ -13,7 +13,7 @@
 
 	async function import_product() {
 		console.log('import');
-        let r = await doImportProduct(shop);
+        let r = await doImportArticles(shop);
         console.log(r);
         if (r.status == 'success') {
             goto('./dashboard');
@@ -108,6 +108,8 @@
 	
 	</div>
 	
-    <p>click <a href={shop_url}> here</a> to go back to the shop</p>
+    <p>click <a href={shop_url}> here</a> to go back to the shop, 
+
+	or click <a href='https://sakura.eco'> here</a> to access sakura.eco</p>
 </div>
 

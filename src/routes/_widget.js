@@ -1,6 +1,6 @@
 export async function doInstallWidget(shop) {
 
-    let url = "https://sakura.eco/api/widget/install_widget/"+shop;
+    let url = "https://sakura.eco/api/shopify/widget/"+shop;
   
     return await fetch( url , {
         mode: 'cors' })
