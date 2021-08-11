@@ -1,5 +1,8 @@
 <script>
 	import { shop } from '../components/stores.js';
+
+	let flag_import;
+
 </script>
 
 <style>
@@ -15,8 +18,6 @@
 		font-weight: 'bold';
 		font-size: 2em;
 	}
-
-
 
 	p {
 		text-align: center;
@@ -44,7 +45,8 @@
 	<a href='./login'> here </a>
 	and enter your credentials</p>
 	<p> then you can use this app to import products</p>
-	<p> and to install our widget in your shop {$shop}
-	</p>
+	<!--
+	<p> and to install our widget in your shop {$shop}</p>
+	-->
 	
 </div>

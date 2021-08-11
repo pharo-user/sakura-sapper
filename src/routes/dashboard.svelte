@@ -10,6 +10,7 @@
 	let loading = false
 
     let shop_url = 'https://'+$shop;
+	let flag_widget = false;
 
 	async function import_product() {
 		console.log('import');
@@ -94,9 +95,12 @@
     <h2>STATISTICS</h2>
     <Statistics></Statistics>
 	-->
+
+	{#if flag_widget}
 	<button on:click={ ()=>promiser(install_widget(), status => loading = status)}>
 		Install Widget
 	</button>
+	{/if}
 
 	<button on:click={ ()=>promiser(import_product(), status => loading = status)}>
 		Import Product
