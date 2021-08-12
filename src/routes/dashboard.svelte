@@ -1,5 +1,5 @@
 <script>
-	//import Statistics from '../components/Statistics.svelte';
+	import Statistics from '../components/Statistics.svelte';
 	import { doImportArticles } from './_import';
 	import { doInstallWidget } from './_widget';
 

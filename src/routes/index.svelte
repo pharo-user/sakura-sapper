@@ -28,7 +28,6 @@
 	}
 
 	p,li {
-		//text-align: center;
 		margin: 1em auto;
 	}
 
