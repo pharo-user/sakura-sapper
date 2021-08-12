@@ -19,7 +19,7 @@
 	h1 {
 		color: black;
 		font-family: 'Montserrat';
-		font-weight: 'bold';
+		font-weight: bold;
 		font-size: 2em;
 	}
 
@@ -68,6 +68,8 @@
   import {goto} from '@sapper/app';
   import { doLogin } from './_login';
 
+  import env from '../components/env.js';
+
   let email = '';
   let password = '';
   let pw_visible = false;
@@ -115,8 +117,8 @@
         <button on:click|once={login}>
             Sign In
         </button>
-        <!--
+        {#if env.flag_test}
         <button on:click={dashboard}>Dashboard</button>
-         -->
+        {/if}
     </div>
 </div>

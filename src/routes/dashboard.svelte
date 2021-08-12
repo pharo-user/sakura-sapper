@@ -5,13 +5,14 @@
 
 	import { shop } from '../components/stores.js';
 	
-	import promiser from '../components/promiser.js'
-	import LoadingIndicator from '../components/LoadingIndicator.svelte'
+	import promiser from '../components/promiser.js';
+	import LoadingIndicator from '../components/LoadingIndicator.svelte';
+
+	import env from '../components/env.js';
+
 	let loading = false
-
     let shop_url = 'https://'+$shop;
-	let flag_widget = false;
-
+	
 	async function import_product() {
 		console.log('import');
         let r = await doImportArticles(shop);
@@ -58,9 +59,11 @@
 	h1 {
 		color: black;
 		font-family: 'Montserrat';
-		font-weight: 'bold';
+		font-weight: bold;
 		font-size: 2em;
+		margin-bottom: 2em;
 	}
+
 	button {
 	   font-family: 'Montserrat';
 	   text-transform: uppercase;
@@ -91,29 +94,32 @@
 
 <div>
 	<h1>SAKURA NETWORK</h1>
-	<!--
+	
+	{#if env.flag_stats}
     <h2>STATISTICS</h2>
     <Statistics></Statistics>
-	-->
-
-	{#if flag_widget}
+	{/if}
+	
+	{#if env.flag_widget}
 	<button on:click={ ()=>promiser(install_widget(), status => loading = status)}>
 		Install Widget
 	</button>
 	{/if}
 
+	{#if env.flag_import}
 	<button on:click={ ()=>promiser(import_product(), status => loading = status)}>
 		Import Product
 	</button>
+	{/if}
+
 	<div>
 		{#if loading}
 		<LoadingIndicator/>
 		{/if}
-	
 	</div>
 	
-    <p>click <a href={shop_url}> here</a> to go back to the shop, 
+    <p>click <a href={shop_url}> here</a> to go back to <b>{shop_url}</b>
 
-	or click <a href='https://sakura.eco'> here</a> to access sakura.eco</p>
+	or click <a href={env.sakura_url}> here</a> to access <b>sakura.eco</b></p>
 </div>
 
