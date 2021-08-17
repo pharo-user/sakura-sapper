@@ -133,6 +133,6 @@
 	
     <p>click <a href={shop_url}> here</a> to go back to <b>{shop_url}</b>
 
-	or click <a href={env.sakura_url}> here</a> to access <b>sakura.eco</b></p>
+	or click <a href={env.sakura_url}> here</a> in order to access <b>sakura.eco</b></p>
 </div>
 
