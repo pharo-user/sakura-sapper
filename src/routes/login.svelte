@@ -86,7 +86,7 @@
             company.setCompany(r.person.companyId);
             goto('./dashboard');
         } else {
-            warning = 'wrong credentials';
+            warning = 'invalid credentials';
         }
 	}
 
