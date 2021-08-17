@@ -13,7 +13,7 @@ const { BASE_PATH } = process.env;
 
 polka() // You can also use Express
   // uncomment next line only for tests
-  .use( '/api', createProxyMiddleware({ target: 'http://127.0.0.1:8081', changeOrigin: true}))
+  //.use( '/api', createProxyMiddleware({ target: 'http://127.0.0.1:8081', changeOrigin: true}))
   .use(
     '/shopify3', 
 		compression({ threshold: 0 }),
