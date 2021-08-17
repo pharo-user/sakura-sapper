@@ -3,24 +3,29 @@
 	import { doImportArticles } from './_import';
 	import { doInstallWidget } from './_widget';
 
-	import { shop } from '../components/stores.js';
+	import { shop, company } from '../components/stores.js';
 	
 	import promiser from '../components/promiser.js';
 	import LoadingIndicator from '../components/LoadingIndicator.svelte';
 
 	import env from '../components/env.js';
+	
 
 	let loading = false
     let shop_url = 'https://'+$shop;
+	let warning = '';
 	
 	async function import_product() {
-		console.log('import');
-        let r = await doImportArticles(shop);
-        console.log(r);
+		console.log('import_product');
+        let r = await doImportArticles(env.sakura_url, $shop, $company);
+		console.log('doImportArticles called');
+        console.log(r.status + ': ' + r.message);
         if (r.status == 'success') {
-            goto('./dashboard');
+			warning = 'import completed';
+            //goto('./dashboard');
         } else {
-            goto('./');
+			warning = 'import aborted';
+            //goto('./');
         }
     } 
 
@@ -37,8 +42,8 @@
     } 
 
 	async function delay(){
-	return await new Promise(resolve => setTimeout(resolve, 3000))
-}
+		return await new Promise(resolve => setTimeout(resolve, 3000))
+	}
 
 
 
@@ -95,9 +100,17 @@
 <div>
 	<h1>SAKURA NETWORK</h1>
 	
+	{#if env.flag_test}
+	<p>company id {$company}</p>
+	{/if}
+
 	{#if env.flag_stats}
     <h2>STATISTICS</h2>
     <Statistics></Statistics>
+	{/if}
+
+	{#if warning != ''}
+	<h2>{warning}</h2>
 	{/if}
 	
 	{#if env.flag_widget}

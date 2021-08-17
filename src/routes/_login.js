@@ -1,6 +1,6 @@
-export async function doLogin(email, password) {
+export async function doLogin(base_url, email, password) {
 
-  let url = "https://sakura.eco/api/user/login";
+  let url = base_url + "/api/user/login";
   let data = { 'email' : email, 'password' : password };
 
   return await fetch( url , {
@@ -8,6 +8,8 @@ export async function doLogin(email, password) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
+       // 'Accept': 'application/json'
+
       },
       body: JSON.stringify(data)
     })

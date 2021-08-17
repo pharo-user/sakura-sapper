@@ -1,11 +1,17 @@
-export async function doImportArticles(shop) {
+export async function doImportArticles(base_url, shop, company) {
 
-    let url = "https://sakura.eco/api/shopify/import/"+shop;
+  //console.log('doImportArticles start');
+  let data =   { 'shop_url' : shop, 'company_id' : company };
+  let url = base_url + "/api/shopify/import";
   
-    return await fetch( url , {
-        mode: 'cors' })
-      .then((r) => r.json())
-        .then((d) => {
-            return d;
-          })
-  }
+  return await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  })
+  .then(response => response.json())
+  .then(data => { //console.log('doImportArticles completed');
+  return data });
+}
